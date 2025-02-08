@@ -1,10 +1,9 @@
 <?php
 session_start();
-include('../default/config.php');
-include('./includes/function.php');
+include('../includes/function.php');
 ?>
-<title><?php if(!empty($title)){echo($title);} ?></title>
-<link rel="shortcut icon" href="<?php if(!empty($iconlight)){echo($iconlight);} ?>" type="image/x-icon">
+<title>Selamat Datang ke Jajahan Jeli</title>
+<link rel="shortcut icon" href="../assets/media/default/icondark.png" type="image/x-icon">
 
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -22,13 +21,13 @@ include('./includes/function.php');
 </script>
 
 <!--Assets-->
-<link rel="stylesheet" href="<?php if(!empty($bootstrapcss)){ echo($bootstrapcss); } ?>?ver=<?php echo(rand(111,9999));?>">
-<link rel="stylesheet" href="<?php if(!empty($css)){ echo($css); } ?>?ver=<?php echo(rand(111,9999));?>">
-<link rel="stylesheet" href="<?php if(!empty($bootstrapicon)){ echo($bootstrapicon); } ?>">
-<link rel="stylesheet" href="<?php if(!empty($fontawesomecss)){ echo($fontawesomecss); } ?>">
-<script src="<?php if(!empty($bootstrapjs)){ echo($bootstrapjs); } ?>"></script>
-<!-- <script src="<?php //if(!empty($bootstrapjs)){ echo($bootstrapjs); } ?>"></script> -->
-<script src="<?php if(!empty($fontawesomejs)){ echo($fontawesomejs); } ?>"></script>
+<link rel="stylesheet" href="../assets/bootstrap/bootstrap.css?ver=<?php echo(rand(111,9999));?>">
+<link rel="stylesheet" href="../assets/main.css?ver=<?php echo(rand(111,9999));?>">
+<link rel="stylesheet" href="../assets/bootstrap/icon/font/bootstrap-icons.min.css">
+<link rel="stylesheet" href="../assets/fontawesome/css/all.css">
+<script src="../assets/bootstrap/bootstrap.js"></script>
+<script src="<?php // echo($bootstrapjs); } ?>"></script>
+<script src="../assets/fontawesome/js/all.js"></script>
 
 <!--Googel Font-->
 <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -36,29 +35,27 @@ include('./includes/function.php');
 <link href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap" rel="stylesheet">
 
 <!-- Primary Meta Tags-->
-<meta name="title" content="<?php if(!empty($title)){echo($title);} ?>" />
-<meta name="description" content="<?php if(!empty($description)){echo($description);} ?>" />
+<meta name="title" content="Selamat Datang ke Jajahan Jeli" />
+<meta name="description" content="Lokasi-lokasi menarik di Jajahan Jeli" />
 <meta name="keywords" content="jeli,kelantan,kuala balah,ayer lanas,pelancongan,usahawan,informasi">
 <meta name="author" content="Darwish Zain Studio">
 <meta name="robots" content="index,follow">
 <meta name="p:domain_verify" content="879a7c6af7c7cb0806dcf64830913e32"/>
 
 <!-- Google / Search Engine Tags -->
-<meta itemprop="name" content="<?php if(!empty($title)){echo($title);} ?>">
-<meta itemprop="description" content="<?php if(!empty($description)){echo($description);} ?>">
-	
+<meta itemprop="name" content="Selamat Datang ke Jajahan Jeli">
+<meta itemprop="description" content="Lokasi-lokasi menarik di Jajahan Jeli">
+
 <!-- Facebook Meta Tags -->
-<meta property="og:url" content="<?php if(!empty($url)){echo($url);} ?>" />
+<meta property="og:url" content="https://jeli.com.my" />
 <meta property="og:type" content="website">
-<meta property="og:title" content="<?php if(!empty($title)){echo($title);} ?>">
-<meta property="og:description" content="<?php if(!empty($description)){echo($description);} ?>">
+<meta property="og:title" content="Selamat Datang ke Jajahan Jeli">
+<meta property="og:description" content="Lokasi-lokasi menarik di Jajahan Jeli">
 <meta property="og:image" content="<?php //image here?>" />
-	
+
 <!-- Twitter Meta Tags -->
 <meta name="twitter:card" content="summary_large_image">
-<meta property="twitter:url" content="<?php if(!empty($url)){echo($url);} ?>" />
-<meta name="twitter:title" content="<?php if(!empty($title)){echo($title);} ?>">
-<meta name="twitter:description" content="<?php if(!empty($description)){echo($description);} ?>">
+<meta property="twitter:url" content="https://jeli.com.my" />
+<meta name="twitter:title" content="Selamat Datang ke Jajahan Jeli">
+<meta name="twitter:description" content="Lokasi-lokasi menarik di Jajahan Jeli">
 <meta property="twitter:image" content="<?php //image here?>" />
-
-<script src="https://kit.fontawesome.com/6d1cef488a.js" crossorigin="anonymous"></script>

@@ -6,7 +6,7 @@ echo("<script>console.log('Running');</script>");
 $dbhost = 'localhost';
 $dbuser = 'root';
 $dbpass = '';
-$dbname = 'default-jeli.com.my';
+$dbname = 'developer-jeli.com.my';
 
 $conn = mysqli_connect($dbhost,$dbuser,$dbpass,$dbname);
 if(!$conn)
