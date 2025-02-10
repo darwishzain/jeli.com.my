@@ -49,6 +49,7 @@ function listlocation($conn)
     $content .= '</div>';
     return $content;
 }
+
 function displaylocation($conn,$slug)
 {
     $content = "";
