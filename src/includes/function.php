@@ -11,5 +11,9 @@ function checkfile($filename,$development)
 	}
 }
 
-
+$title = $title ?? "Selamat Datang ke Jajahan Jeli";
+$description = $description ?? "Lokasi-lokasi menarik di Jajahan Jeli";
+$icondark = $icondark ?? "../assets/media/default/icondark.png";
+$keywords = $keywords ?? "jeli,kelantan,kuala balah,ayer lanas,pelancongan,usahawan,informasi";
+$author = $author ?? "Darwish Zain Studio";
 ?>

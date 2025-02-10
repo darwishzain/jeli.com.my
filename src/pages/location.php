@@ -13,12 +13,16 @@ if(!empty($_GET))
     }
     else if(isset($_GET['tag']))
     {
-
+        $content .= listlocation($conn,$_GET['tag']);
+    }
+    else if(isset($_GET['search']))
+    {
+        $content .= 'SEDANG DINAIKTARAF';
     }
 }
 else
 {
-    $content .= listlocation($conn,$content);
+    $content .= listlocation($conn,"");
 }
 
 

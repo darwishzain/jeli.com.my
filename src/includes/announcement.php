@@ -22,8 +22,8 @@
             $announcements = [
                 "Selamat datang ke Laman Sesawang Jajahan Jeli!",
                 "Kunjungi lokasi menarik di Jajahan Jeli",
-                "Kongsikan tempat-tempat menarik di Jeli.",
-                "https://jeli.com.my."
+                "Kongsikan tempat-tempat menarik di Jeli",
+                "SEDANG NAIKTARAF"
             ];
             echo implode(" &nbsp;|&nbsp; ", $announcements);
         ?>

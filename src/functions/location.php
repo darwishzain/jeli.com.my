@@ -4,7 +4,7 @@
 {
     $content = "";
     $content .= '<div class="container">';
-    //Append content here
+    //!Append content here
     $content .= '/<div>';
     return $content;
 } */
@@ -23,28 +23,45 @@ if(mysqli_num_rows($url_r)>0)
 }
 //print_r($urlprefix);
 
-function listlocation($conn)
+function listlocation($conn,$tag)
 {
     $content = "";
-    $content .= '<div class="container">';
-    $location_q = mysqli_query($conn,"SELECT * FROM location WHERE public = '1'");
+    $title = "Lokasi";
+    global $urlprefix;
+    $content .= '<div class="container mt-4">';
+    if(!empty($tag)){$argument = ' AND tag = "'.$tag.'"';}
+    else{$argument = "";}
+    $location_q = mysqli_query($conn,'SELECT * FROM location WHERE public = "1"'.$argument);
     if(mysqli_num_rows($location_q)>0)
     {
         $content .= "<h1 style='text-align:center;'>Lokasi</h1>";
+        if(!empty($tag)){$content .= "<h2 style='text-align:center;'>#".$tag."</h2>";}
+        $content .= '<ul class="list-group my-4">';
         while($l_r = mysqli_fetch_assoc($location_q))
         {
-            $content .= '<div class="col-6 bg-light text-dark" style="margin:auto;text-align:center; border-radius:15px;">';
-            $content .= '  <div>';
-            $content .= '    <div>';
-            $content .= '      <a href="../pages/location.php?location='.$l_r['slug'].'"><h3>'.$l_r['name'].'</h3></a>';
-            $content .= '    </div>';
-            $content .= '    <div class="d-flex flex-wrap justify-content-center">';
-            $content .= '      <span class="keyword">Kategori</span>';
-            $content .= '    </div>';
-            $content .= '  </div>';
-            $content .= '  <div style="margin-bottom: 20px;"></div>';
+            $content .= '<li class="list-group-item d-flex align-items-center">';
+            $content .= '   <div>';
+            $content .= '       <img src="../assets/media/default/icondark.png" alt="Logo" class="me-3" style=" width: 50px; height: 50px; object-fit: cover; border-radius: 50%;">';
+            $content .= '   </div>';
+            $content .= '   <div>';
+            $content .= '       <a href="../pages/location.php?location='.$l_r['slug'].'"><strong>'.$l_r['name'].'</strong> <i class="text-success bi bi-patch-check-fill"></i></a>';
+            $content .= '       <a href="../pages/location.php?tag='.$l_r['tag'].'"><small class="text-primary m-5">#'.$l_r['tag'].'</small></a>';
+            $content .= '   </div>';
+            $content .= '   <div class="social-icons ms-auto">';
+            foreach ($urlprefix as $name => $url) {
+                if(!empty($l_r[$name]))
+                {
+                    $content .= '<a href="' . $url['attribute'] . $l_r[$name] . '" target="_blank">';
+                    if (!empty($url['icon'])) {
+                        $content .= '<i class="' . $url['icon'] . ' me-2"></i>';
+                    }
+                    $content .= '</a>';
+                }
+            }
             $content .= '</div>';
+            $content .= '</li>';
         }
+        $content .= '</ul>';
     }
     $content .= '</div>';
     return $content;

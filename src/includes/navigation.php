@@ -1,7 +1,7 @@
 <?php checkfile(basename(__FILE__),$development);?>
 <nav class="navbar navbar-expand-lg navbar-light bg-light">
     <div class="container-fluid">
-		<a class="navbar-brand" href="index.php"><img src="../assets/media/default/icondark.png" width=50 height=50></a>
+		<a class="navbar-brand" href="../pages/location.php"><img src="../assets/media/default/icondark.png" width=50 height=50></a>
         <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" 	aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
         </button>
@@ -17,28 +17,48 @@
                     <a class="nav-link" href="../pages/post.php">Siaran</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="../pages/about.php">Tentang</a>
+                    <a class="nav-link" href="../pages/about.php">Perihal</a>
                 </li>
+<!--                 <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                    Perihal
+                </button>
+                <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                    <a class="dropdown-item" href="../pages/about.php#misi">Misi</a>
+                    <a class="dropdown-item" href="../pages/about.php#visi">Visi</a>
+                    <a class="dropdown-item" href="../pages/about.php#hubungi-kami">Hubungi Kami</a>
+                    <a class="dropdown-item" href="../pages/about.php#soalan-lazim">Soalan Lazim</a>
+                </div> -->
                 <li class="nav-item">
-                    <form class="d-flex" action="search.php" method="GET">
+                    <form class="d-flex" action="function.php" method="GET">
                         <input class="form-control me-2" type="search" placeholder="Cari" aria-label="Search" name="query" style="border-width: 2px;">
                         <button class="btn btn-outline-success" type="submit">Cari</button>
                     </form>
                 </li>
             </ul>
-            <ul class="navbar-nav ms-auto">
-                <li class="nav-item">
-                    <a class="nav-link bg-primary text-white" href="../pages/admin.php">Pentadbir</a>
-                </li>
-            </ul>
+            <?php
+            if(file_exists('../pages/admin.php'))
+            {
+                ?>
+                <ul class="navbar-nav ms-auto">
+                    <li class="nav-item">
+                        <a class="nav-link bg-primary text-white" href="../pages/admin.php" style="border-radius: 15px;">Pentadbir</a>
+                    </li>
+                <ul>
+                <?php
+            }
+            ?>
         </div>
     </div>
 </nav>
 <style type="text/css">
-	nav div div ul li a:hover
-	{
-		background-color: #28a745;
-        color: #FFFFF;
-        border-radius: 15px;
-	}
+nav div div ul li a:hover
+{
+    border-radius: 15px;
+}
+nav div div ul li a:hover
+{
+    border-radius: 15px;
+    background-color: #28a745;
+    color: #FFFFF;
+}
 </style>
