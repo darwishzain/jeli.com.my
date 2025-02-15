@@ -5,60 +5,41 @@
         <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" 	aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
         </button>
-        <div class="collapse navbar-collapse" id="navbarNav">
+        <div class="text-center collapse navbar-collapse" id="navbarNav">
             <ul class="navbar-nav">
-                <li class="nav-item">
-                    <a class="nav-link active" aria-current="page" href="../pages/home.php">Utama</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="../pages/location.php">Lokasi</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="../pages/post.php">Siaran</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="../pages/about.php">Perihal</a>
-                </li>
-<!--                 <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                    Perihal
-                </button>
-                <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-                    <a class="dropdown-item" href="../pages/about.php#misi">Misi</a>
-                    <a class="dropdown-item" href="../pages/about.php#visi">Visi</a>
-                    <a class="dropdown-item" href="../pages/about.php#hubungi-kami">Hubungi Kami</a>
-                    <a class="dropdown-item" href="../pages/about.php#soalan-lazim">Soalan Lazim</a>
-                </div> -->
-                <li class="nav-item">
-                    <form class="d-flex" action="function.php" method="GET">
-                        <input class="form-control me-2" type="search" placeholder="Cari" aria-label="Search" name="query" style="border-width: 2px;">
-                        <button class="btn btn-outline-success" type="submit">Cari</button>
-                    </form>
-                </li>
-            </ul>
-            <?php
-            if(file_exists('../pages/admin.php'))
-            {
-                ?>
-                <ul class="navbar-nav ms-auto">
-                    <li class="nav-item">
-                        <a class="nav-link bg-primary text-white" href="../pages/admin.php" style="border-radius: 15px;">Pentadbir</a>
-                    </li>
-                <ul>
                 <?php
-            }
+                navigation(['../pages/home.php',''],'Utama','btn-success active');
+                //! upload/download ../pages/location.php and ../functions/location.php to use location page and its functions
+                navigation(['../pages/location.php','../functions/location.php'],'Lokasi','btn-success');
+                //! upload/download ../pages/post.php and ../functions/post.php to use post page and its functions
+                navigation(['../pages/post.php','../functions/post.php'],'Siaran','btn-success');
+                //! upload/download ../pages/about.php to use about page
+                navigation(['../pages/about.php',''],'Perihal','btn-success');
+                //! upload/download ../functions/search.php to use search function
+                if(file_exists('../functions/search.php'))
+                {
+                    ?>
+                    <li class="nav-item">
+                        <form class="d-flex" action="function.php" method="GET">
+                            <input class="form-control me-2" type="search" placeholder="Cari" aria-label="Search" name="query" style="border-width: 2px;">
+                            <button class="btn btn-outline-success" type="submit">Cari</button>
+                        </form>
+                    </li>
+                    <?php
+                }
+                ?>
+            </ul>
+            <ul class="navbar-nav ms-auto">
+            <?php
+            //! upload/download ../pages/crowd.php and ../functions/crowd.php to use crowd page and its functions
+            navigation(['../pages/crowd.php','../functions/crowd.php'],'Kongsi Maklumat','btn-primary');
+            //! upload/download ../pages/admin.php and ../functions/admin.php to use admin page and its functions
+            navigation(['../pages/admin.php','../functions/admin.php'],'Pentadbir','btn-primary');
             ?>
+            <ul>
         </div>
     </div>
 </nav>
 <style type="text/css">
-nav div div ul li a:hover
-{
-    border-radius: 15px;
-}
-nav div div ul li a:hover
-{
-    border-radius: 15px;
-    background-color: #28a745;
-    color: #FFFFF;
-}
+
 </style>

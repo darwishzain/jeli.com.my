@@ -1,3 +1,4 @@
+<?php checkfile(basename(__FILE__),$development);?>
 <style>
     .ticker-container {
         width: 100%;
@@ -20,12 +21,11 @@
     <div class="ticker-text">
         <?php
             $announcements = [
-                "Selamat datang ke Laman Sesawang Jajahan Jeli!",
-                "Kunjungi lokasi menarik di Jajahan Jeli",
-                "Kongsikan tempat-tempat menarik di Jeli",
+                "Kunjungi lokasi menarik di Jajahan Jeli dan kongsikan tempat-tempat menarik di Jeli",
+                "Bina laman sesawang anda sendiri dengan kami",
                 "SEDANG NAIKTARAF"
             ];
-            echo implode(" &nbsp;|&nbsp; ", $announcements);
+            echo(implode(" &nbsp;|&nbsp; ", $announcements));
         ?>
     </div>
 </div>

@@ -1,5 +1,5 @@
 <?php
-session_start();
+//session_start();
 include('../includes/function.php');
 ?>
 <title><?php echo($title);?></title>
@@ -11,7 +11,6 @@ include('../includes/function.php');
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
 <!-- Google tag (gtag.js) -->
-<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 <script async src="https://www.googletagmanager.com/gtag/js?id=G-RM2PDHT85D"></script>
 <script>
     window.dataLayer = window.dataLayer || [];
@@ -23,8 +22,8 @@ include('../includes/function.php');
 <!--Assets-->
 <link rel="stylesheet" href="../assets/bootstrap/bootstrap.css?ver=<?php echo(rand(111,9999));?>">
 <link rel="stylesheet" href="../assets/main.css?ver=<?php echo(rand(111,9999));?>">
-<link rel="stylesheet" href="../assets/bootstrap/icon/font/bootstrap-icons.min.css">
-<link rel="stylesheet" href="../assets/fontawesome/css/all.css">
+<link rel="stylesheet" href="../assets/bootstrap/icon/font/bootstrap-icons.min.css?ver=<?php echo(rand(111,9999));?>">
+<link rel="stylesheet" href="../assets/fontawesome/css/all.min.css?ver=<?php echo(rand(111,9999));?>">
 
 <!--Googel Font-->
 <link rel="preconnect" href="https://fonts.googleapis.com">
