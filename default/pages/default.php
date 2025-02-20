@@ -1,4 +1,5 @@
 <?php
+include('../functions/main.php');
 $title='Halaman Kosong';
 $content = "";
 $content .= '<h1 class="text-center">Halaman Kosong</h1>';

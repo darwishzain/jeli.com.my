@@ -1,16 +1,19 @@
-
-<?php 
-include('../config/database.php');
+<?php
+include('../functions/main.php');
 include('../functions/admin.php');
+if(empty($_SESSION['id']) || $_SESSION['role']!='admin')
+{
+    header("Location: ../pages/location.php");
+    exit();
+}
 $title = "Pentadbir";
-
 $content = "";
 //$content .= nav('admin');
 if(!empty($_GET))
 {
     if(isset($_GET['location']))
     {
-        refreshfolder('locations');
+        refreshdirectory('locations');
         if(empty($_GET['location']))
         {
             $content .= addlocationform($conn);
@@ -25,10 +28,13 @@ if(!empty($_GET))
     {
         $content .= '<h1 class="text-center" style="">Dashboard</h1>';
     }
+    
 }
 else
 {
-    header("Location:../pages/admin.php?location");
+    $content .= addlocationform($conn);
+    $content .= listlocation($conn);
 }
+
 ?>
 <?php include('../layout/main.php');?>

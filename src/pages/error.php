@@ -1,4 +1,5 @@
 <?php
+include('../functions/main.php');
 $title='Ralat 404';
 $content = "";
 $content .= '<h1>Ralat 404 : Halaman tidak ditemui.</h1>';

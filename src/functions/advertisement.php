@@ -20,8 +20,8 @@ function adsinlist($conn)
             if (count($ads) > 0) {
                 // Choose a random ad from the array
                 $r_ads = $ads[array_rand($ads)];
-                $content .= '<a href="' . $r_ads['link'] . '" target="_blank"><img src="' . $r_ads['image'] . '" border="0" width="100%" /></a>';
                 $content .= 'Iklan';
+                $content .= '<a href="' . $r_ads['link'] . '" target="_blank"><img src="' . $r_ads['image'] . '" border="0" width="100%" /></a>';
             }
             $content .= '</li>';
         }

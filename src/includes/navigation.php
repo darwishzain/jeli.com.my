@@ -8,13 +8,13 @@
         <div class="text-center collapse navbar-collapse" id="navbarNav">
             <ul class="navbar-nav">
                 <?php
-                navigation(['../pages/home.php',''],'Utama','btn-success active');
+                navigation(['../pages/home.php',''],'Utama','');
                 //! upload/download ../pages/location.php and ../functions/location.php to use location page and its functions
-                navigation(['../pages/location.php','../functions/location.php'],'Lokasi','btn-success');
+                navigation(['../pages/location.php','../functions/location.php'],'Lokasi','');
                 //! upload/download ../pages/post.php and ../functions/post.php to use post page and its functions
-                navigation(['../pages/post.php','../functions/post.php'],'Siaran','btn-success');
+                navigation(['../pages/post.php','../functions/post.php'],'Siaran','');
                 //! upload/download ../pages/about.php to use about page
-                navigation(['../pages/about.php',''],'Perihal','btn-success');
+                navigation(['../pages/about.php',''],'Perihal','');
                 //! upload/download ../functions/search.php to use search function
                 if(file_exists('../functions/search.php'))
                 {
@@ -31,10 +31,22 @@
             </ul>
             <ul class="navbar-nav ms-auto">
             <?php
-            //! upload/download ../pages/crowd.php and ../functions/crowd.php to use crowd page and its functions
-            navigation(['../pages/crowd.php','../functions/crowd.php'],'Kongsi Maklumat','btn-primary');
-            //! upload/download ../pages/admin.php and ../functions/admin.php to use admin page and its functions
-            navigation(['../pages/admin.php','../functions/admin.php'],'Pentadbir','btn-primary');
+            //! upload/download ../pages/user.php and  ../functions/user.php to use about page and its functions
+            navigation(['../pages/user.php','../functions/user.php'],'Pengguna','btn-outline-primary');
+
+            if(!empty($_SESSION['id']))
+            {
+                if($_SESSION['role']=='admin')
+                {
+                    //! upload/download ../pages/admin.php and ../functions/admin.php to use admin page and its functions
+                    navigation(['../pages/admin.php','../functions/admin.php'],'Pentadbir','btn-outline-info text-dark');
+                }
+                ?>
+                <li class="nav-item m-1">
+                    <a class="nav-light rounded text-dark w-100 d-md-inline-block btn btn-danger" href="../pages/user.php?logout">Log Keluar</a>
+                </li>
+                <?php
+            }
             ?>
             <ul>
         </div>

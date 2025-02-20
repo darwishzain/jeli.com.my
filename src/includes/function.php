@@ -1,23 +1,4 @@
 <?php
-//! Set $development=true during development for debugging
-$development = 'true';
-
-//* Add to top of files (Debugging Elimination)
-//* checkfile(basename(__FILE__),$development);
-function checkfile($filename,$development)
-{
-	if($development == 'true')
-	{
-		echo("<script>console.log('Check $filename');</script>");
-	}
-}
-
-function addjs($filename)
-{
-	global $development;
-	checkfile(basename($filename),$development);
-	echo("<script src='$filename'></script>");
-}
 
 //! Change the title, description, icondark, keywords, and author if necessary
 $title = $title ?? "Selamat Datang ke Jajahan Jeli";
@@ -39,11 +20,12 @@ function navigation($file,$text,$style)
 			$boolean[$i] = file_exists($file[$i]);
 		}
 	}
+	if(empty($style)){$style = 'btn-outline-success';}
 	if($boolean['0']&&$boolean['1'])
 	{
 		?>
 		<li class="nav-item m-1">
-			<a class="nav-light rounded btn <?php echo($style);?>" href="<?php echo($file['0']);?>"><?php echo($text);?></a>
+			<a class="nav-light rounded text-dark w-100 d-md-inline-block btn <?php echo($style);?>" href="<?php echo($file['0']);?>"><?php echo($text);?></a>
 		</li>
 		<?php
 	}
