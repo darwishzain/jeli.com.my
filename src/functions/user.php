@@ -84,7 +84,7 @@ function accountform($form)
     $content .= '<form action="../pages/user.php" class="bg-light border border-1 py-3" method="post">';
     $content .= '<div class="d-flex">';
     $content .= '<input type="text" name="username" class="form-control" placeholder="Nama pengguna" required>';
-    $content .= '<input type="text" name="password" class="form-control" placeholder="Kata laluan" required>';
+    $content .= '<input type="password" name="password" class="form-control" placeholder="Kata laluan" required>';
     if($form == 'register')
     {
         $content .= '<input type="text" name="email" class="form-control" placeholder="E-mel" required>';

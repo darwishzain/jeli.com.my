@@ -4,8 +4,7 @@ include('../functions/location.php');
 if(isset($_GET['id']))
 {
     $slug = $conn->query("SELECT slug FROM location WHERE id = {$_GET['id']}")->fetch_assoc()['slug'];
-    header("Location: ../pages/location.php?location=$slug");
-    exit();
+    redirect("../pages/location.php?location=$slug");
 }
 ?>
 <?php $title="Lokasi"?>
@@ -15,11 +14,11 @@ if(!empty($_GET))
 {
     if(isset($_GET['location']))
     {
-        $content .= displaylocation($conn,mysqli_real_escape_string($conn,$_GET['location']));
+        $content .= displaylocation($conn,urldecode($_GET['location']));
     }
     else if(isset($_GET['tag']))
     {
-        $content .= listlocation($conn,$_GET['tag']);
+        $content .= listlocation($conn,urldecode($_GET['tag']));
     }
     else if(isset($_GET['search']))
     {

@@ -77,3 +77,94 @@ function addjs($filename)
 	checkfile(basename($filename),$development);
 	echo("<script src='$filename'></script>");
 }
+
+function redirect($location)
+{
+	echo("<script>window.location.href='$location';</script>");
+}
+
+function taglink($tag)
+{
+	$content = "";
+	if (!empty($tag)) {
+		$tags = explode(',', $tag);
+		foreach ($tags as $t) {
+			$t = trim($t);
+			$content .=' <a href="?tag=' . urlencode($t) . '"><small class="text-primary">#' . htmlspecialchars($t) . '</small></a>';
+		}
+		return($content);
+	}
+	return("");
+}
+
+function tagquery($conn,$tag,$public)
+{
+	$argument = "";
+	if(empty($public))
+	{
+		$argument .= ' OR public = 1';
+	}
+	if(!empty($tag))
+	{
+		$decode = urldecode($tag);
+		$tagword = explode(' ',$decode);
+		$argument .= ' AND (';
+		$params = [];
+		$types = 'i';
+		foreach ($tagword as $index => $word) {
+			if($index>0)
+			{
+				$argument .= ' OR ';
+			}
+			$argument .= 'tag LIKE ?';
+			$params[] = '%'.$word.'%';
+			$types .= 's';
+		}
+		$argument .= ')';
+	}
+	else
+	{
+		$argument = '';
+	}
+    $stmt = $conn->prepare('SELECT * FROM location WHERE public = ?' . $argument);
+    if (!empty($tag)) {
+        $stmt->bind_param($types, $public, ...$params);  // Use the spread operator to bind all params
+    } else {
+        $stmt->bind_param('i', $public);
+    }
+    $stmt->execute();
+    $location_q = $stmt->get_result();
+	return($location_q);
+}
+
+function alltagquery($conn,$tag)
+{
+	// Initialize the argument variable for tag filtering
+	$argument = "";
+
+	// If $tag is provided, process it
+	if (!empty($tag)) {
+		$decode = urldecode($tag);
+		$tagword = explode(' ', $decode);
+		$argument = ' AND (';
+
+		$types = "";
+		$params = [];
+		foreach ($tagword as $index => $word) {
+			if ($index > 0) {
+				$argument .= ' OR ';
+			}
+			$argument .= 'tag LIKE ?';
+			$params[] = '%' . $word . '%';
+			$types .= 's';
+		}
+		$argument .= ')';
+	}
+	$query = 'SELECT * FROM location WHERE (public = 0 OR public = 1)' . $argument. ' ORDER BY name ASC';
+	$stmt = $conn->prepare($query);
+	if (!empty($tag)) {$stmt->bind_param($types, ...$params);}
+	$stmt->execute();
+	$location_q = $stmt->get_result();
+	return($location_q);
+
+}

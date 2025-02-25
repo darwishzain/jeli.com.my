@@ -3,8 +3,7 @@ include('../functions/main.php');
 include('../functions/admin.php');
 if(empty($_SESSION['id']) || $_SESSION['role']!='admin')
 {
-    header("Location: ../pages/location.php");
-    exit();
+    redirect("../pages/location.php");
 }
 $title = "Pentadbir";
 $content = "";
@@ -14,15 +13,18 @@ if(!empty($_GET))
     if(isset($_GET['location']))
     {
         refreshdirectory('locations');
-        if(empty($_GET['location']))
+        if(!empty($_GET['location']))
         {
-            $content .= addlocationform($conn);
-            $content .= listlocation($conn);
+            $content .= displaylocation($conn,urldecode($_GET['location']));
         }
         else
         {
-            $content .= displaylocation($conn,mysqli_real_escape_string($conn,$_GET['location']));
+            $content .= listlocation($conn,"");
         }
+    }
+    else if(isset($_GET['tag']))
+    {
+        $content .= listlocation($conn,urldecode($_GET['tag']));
     }
     else
     {
@@ -32,8 +34,7 @@ if(!empty($_GET))
 }
 else
 {
-    $content .= addlocationform($conn);
-    $content .= listlocation($conn);
+    redirect('../pages/admin.php?location');
 }
 
 ?>

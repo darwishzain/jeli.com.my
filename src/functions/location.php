@@ -29,12 +29,11 @@ if(mysqli_num_rows($url_r)>0)
 function listlocation($conn,$tag)
 {
     $content = "";
+    $argument = "";
     $title = "Lokasi";
     global $urlprefix;
     $content .= '<div class="container mt-4">';
-    if(!empty($tag)){$argument = ' AND tag = "'.$tag.'"';}
-    else{$argument = "";}
-    $location_q = mysqli_query($conn,'SELECT * FROM location WHERE public = "1"'.$argument);
+    $location_q = tagquery($conn,$tag,1);
     if(mysqli_num_rows($location_q)>0)
     {
         $content .= "<h1 style='text-align:center;'>Lokasi</h1>";
@@ -52,7 +51,7 @@ function listlocation($conn,$tag)
             $content .= '   </div>';
             $content .= '   <div>';
             $content .= '       <a href="../pages/location.php?location='.$l_r['slug'].'"><strong>'.$l_r['name'].'</strong> <i class="text-success bi bi-patch-check-fill"></i></a>';
-            $content .= '       <a href="../pages/location.php?tag='.$l_r['tag'].'"><small class="text-primary m-5">#'.$l_r['tag'].'</small></a>';
+            $content .= taglink($l_r['tag']);
             $content .= '   </div>';
             $content .= '   <div class="social-icons ms-auto">';
             foreach ($urlprefix as $name => $url) {

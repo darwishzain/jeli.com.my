@@ -29,7 +29,8 @@ if(!empty($_SESSION['id']))
         $content .= $_SESSION['id'].$_SESSION['username'].$_SESSION['role'];
     }
     $title = '@'.$_SESSION['username'];
-    $content .= $_SESSION['username'].' ['.$_SESSION['role'].']';
+    $content .= '<h4 class="text-center rounded mx-5">@'.$_SESSION['username'].'.'.$_SESSION['role'].'</h4>';
+	$content .= '<h4 class="bg-light text-center text-danger rounded mx-5">HALAMAN PENGGUNA SEDANG DINAIKTARAF </h4>';
 }
 else
 {
