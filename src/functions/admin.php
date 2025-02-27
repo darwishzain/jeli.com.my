@@ -32,7 +32,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && !empty($_POST))
         $parent = $_POST['parent'];
         $public = isset($_POST['public']) ? $_POST['public'] : 0;
         $tag = $_POST['tag'];
-        $slug = str_replace(' ', '-', strtolower($name));
+        $slug = urlencode(str_replace(' ', '-', strtolower($name)));
         $stmt = $conn->prepare("UPDATE location SET name = ?, slug = ?, parent = ?, tag = ?, public = ? WHERE id = ?");
         $stmt->bind_param("ssssis", $name, $slug, $parent, $tag, $public, $id);
         $add_q = $stmt->execute(); $stmt->close();
@@ -85,7 +85,7 @@ function addlocationform($conn)
     $content .= '   <div class="d-flex">';
     $content .= '       <input type="text" id="name" name="name" class="form-control" placeholder="Nama Lokasi">';
     $content .= '       <select id="parent" name="parent" class="form-control">';
-                $parent_q = mysqli_query($conn,"SELECT id,name FROM location WHERE public = '1'");
+                $parent_q = mysqli_query($conn,"SELECT id,name FROM location WHERE public = '1' ORDER BY name ASC");
                 if(mysqli_num_rows($parent_q)>0)
                 {
                     while($p_r = mysqli_fetch_assoc($parent_q))
@@ -151,7 +151,7 @@ function listlocation($conn,$tag)
             $content .=             taglink($l_r['tag']);
             $content .= '       </div>';
             $content .= '       <div class="col-1">';
-            $content .= '           <a href="../pages/location.php?location='.$l_r['slug'].'" target="_blank"> <i class="bi bi-box-arrow-up-right"></i></a>';
+            $content .= '           <a href="../pages/location.php?location='.$l_r['slug'].'" target="_blank" rel="noopener"> <i class="bi bi-box-arrow-up-right"></i></a>';
             $content .= '           <a href="../pages/admin.php?location='.$l_r['slug'].'"><i class="bi bi-pencil-fill"></i></a>';
             $content .= '       </div>';
             $content .= '   </div>';
@@ -173,7 +173,7 @@ function displaylocation($conn,$slug)
         $title = $l_r['name'];
         $content .= '<h1 class="text-center" style="">Sunting </h1>';
         $content .= '<h2 class="text-center" style="">'.$l_r['name'];
-        $content .= '   <a href="../pages/location.php?location='.$l_r['slug'].'" target="_blank"> <i class="bi bi-box-arrow-up-right"></i></a>';
+        $content .= '   <a href="../pages/location.php?location='.$l_r['slug'].'" target="_blank" rel="noopener"> <i class="bi bi-box-arrow-up-right"></i></a>';
         $content .= '</h2>';
         $content .= '<form class="center-align m-2" method="POST" action="../pages/admin.php">';
         $content .= '   <input class="" type="text" name="id" value="'.$l_r['id'].'" hidden>';
@@ -182,7 +182,7 @@ function displaylocation($conn,$slug)
         $content .= '<div class="d-flex">';
         $content .= '   <input type="text" id="name" name="name" class="form-control" placeholder="Nama Lokasi" value="'.$l_r['name'].'">';
         $content .= '   <select id="parent" name="parent" class="form-control">';
-        $parent_q = mysqli_query($conn,"SELECT id,name FROM location WHERE public = '1'");
+        $parent_q = mysqli_query($conn,"SELECT id,name FROM location WHERE public = '1' ORDER BY name ASC");
             if(mysqli_num_rows($parent_q)>0)
             {
                 while($p_r = mysqli_fetch_assoc($parent_q))

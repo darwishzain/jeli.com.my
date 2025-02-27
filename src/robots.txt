@@ -1,0 +1,12 @@
+User-agent: *
+Disallow: /pages/admin.php
+Disallow: /functions/admin.php
+#Disallow: /login/
+#Disallow: /register/
+
+User-agent: Googlebot
+Allow: /
+Disallow: /pages/admin.php
+Disallow: /functions/admin.php
+
+Sitemap: http://jeli.com.my/sitemap.xml

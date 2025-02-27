@@ -5,10 +5,11 @@ include('../includes/function.php');
 <title><?php echo($title);?></title>
 <link rel="shortcut icon" href="../assets/media/default/icondark.png" type="image/x-icon">
 
+<html lang = "ms">
 <meta charset="utf-8">
-<meta name="viewport" content="width=device-width, initial-scale=1">
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta property="og:updated_time" content="2025-02-25T15:30:00Z">
 
 <!-- Google tag (gtag.js) -->
 <script async src="https://www.googletagmanager.com/gtag/js?id=G-RM2PDHT85D"></script>

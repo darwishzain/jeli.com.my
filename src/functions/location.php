@@ -30,14 +30,17 @@ function listlocation($conn,$tag)
 {
     $content = "";
     $argument = "";
-    $title = "Lokasi";
-    global $urlprefix;
+    global $title, $description, $urlprefix;
+    $title = "Senarai Lokasi Menarik di Jajahan Jeli";
+    $description = "Dapatkan maklumat lanjut dan terokai lokasi-lokasi menarik di Jajahan Jeli.";
     $content .= '<div class="container mt-4">';
     $location_q = tagquery($conn,$tag,1);
     if(mysqli_num_rows($location_q)>0)
     {
-        $content .= "<h1 style='text-align:center;'>Lokasi</h1>";
-        if(!empty($tag)){$content .= "<h2 style='text-align:center;'>#".$tag."</h2>";}
+        $content .= '<h1 class="text-center">Lokasi</h1>';
+        $content .= '<h2 class="text-center">';
+        if(!empty($tag)){$content .= '#'.urldecode($tag).'</h2>';$title .= " #".urldecode($tag);}else{$content .= mysqli_num_rows($location_q);}
+        $content .= "</h2>";
         $content .= '<ul class="list-group my-4">';
         while($l_r = mysqli_fetch_assoc($location_q))
         {
@@ -47,7 +50,7 @@ function listlocation($conn,$tag)
             }
             $content .= '<li class="list-group-item d-flex align-items-center">';
             $content .= '   <div>';
-            $content .= '       <img src="../assets/media/default/icondark.png" alt="Logo" class="me-3" style=" width: 50px; height: 50px; object-fit: cover; border-radius: 50%;">';
+            $content .= '       <img src="../assets/media/default/icondark.png" alt="Logo '.$l_r['slug'].'" class="me-3" style=" width: 50px; height: 50px; object-fit: cover; border-radius: 50%;">';
             $content .= '   </div>';
             $content .= '   <div>';
             $content .= '       <a href="../pages/location.php?location='.$l_r['slug'].'"><strong>'.$l_r['name'].'</strong> <i class="text-success bi bi-patch-check-fill"></i></a>';
@@ -57,7 +60,7 @@ function listlocation($conn,$tag)
             foreach ($urlprefix as $name => $url) {
                 if(!empty($l_r[$name]))
                 {
-                    $content .= '<a href="' . $url['attribute'] . $l_r[$name] . '" target="_blank">';
+                    $content .= '<a href="' . $url['attribute'] . $l_r[$name] . '" target="_blank" rel="noopener">';
                     if (!empty($url['icon'])) {
                         $content .= '<i class="' . $url['icon'] . ' me-2"></i>';
                     }
@@ -76,16 +79,16 @@ function listlocation($conn,$tag)
 function displaylocation($conn,$slug)
 {
     $content = "";
-    $content .= '<p class="text-center my-2"><a href="https://wa.me/601137535178" class="btn btn-primary" target="_blank">Dapatkan halaman untuk lokasi anda</a></p>';
+    $content .= '<p class="text-center my-2"><a href="https://wa.me/601137535178" class="btn btn-primary" target="_blank" rel="noopener">Dapatkan halaman untuk lokasi anda</a></p>';
     $content .= '<div class="container text-black bg-light p-4 my-4 rounded">';
-    global $urlprefix;
+    global $title, $description, $urlprefix;
     $location_q = mysqli_query($conn,"SELECT * FROM location WHERE slug = '" . mysqli_real_escape_string($conn, $slug) . "' LIMIT 1");
     if(mysqli_num_rows($location_q)>0)
     {
         while($l_r = mysqli_fetch_assoc($location_q))
         {
-            global $title;
             $title = $l_r['name'];
+            $description = $l_r['description'];
             //$content .= breadcrumblocation($conn,$l_r['id']);
             $content .= '<div class="row">';
             $content .= '   <div class="col-8 text-center">';
@@ -95,7 +98,7 @@ function displaylocation($conn,$slug)
             foreach ($urlprefix as $name => $url) {
                 if(!empty($l_r[$name]))
                 {
-                    $content .= '<a class="btn btn-success mx-1 rounded-pill" href="' . $url['attribute'] . $l_r[$name] . '" target="_blank">';
+                    $content .= '<a class="btn btn-success mx-1 rounded-pill" href="' . $url['attribute'] . $l_r[$name] . '" target="_blank" rel="nofollow">';
                     if (!empty($url['icon'])) {
                         $content .= '<i class="' . $url['icon'] . '"></i>';
                     }
