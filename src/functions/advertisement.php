@@ -8,7 +8,7 @@ function adsinlist($conn)
         if(($a_c = mysqli_num_rows($advertisement_q))>0)
         {
             $ads = [];
-            $content .= '<li class="list-group-item text-center">';
+            $content .= '<li class="ads list-group-item text-center py-3">';
             while($a_r = mysqli_fetch_assoc($advertisement_q))
             {
                 $ads[] = [
@@ -20,14 +20,15 @@ function adsinlist($conn)
             if (count($ads) > 0) {
                 // Choose a random ad from the array
                 $r_ads = $ads[array_rand($ads)];
-                $content .= '<span class="text-info">Iklan</span><br>';
+                $content .= '<span class="text-white">Iklan</span><br>';
                 $content .= '<a href="' . $r_ads['link'] . '" target="_blank" rel="nofollow"><img src="' . $r_ads['image'] . '" border="0" width="100%" alt="Iklan" /></a>';
             }
             $content .= '</li>';
         }
         else
         {
-            $content .= '<li class="list-group-item text-center">';
+            $content .= '<li class="ads list-group-item text-center py-3">';
+            $content .= '<span class="text-white">Iklan</span><br>';
             $content .= 'Contoh Iklan';
             $content .= '</li>';
         }

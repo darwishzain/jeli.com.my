@@ -18,6 +18,24 @@ function checkfile($filename,$development)
 	}
 }
 
+
+$urlprefix = [];
+$urlprefix['phone'] = ['attribute' => 'tel:60','icon' => 'bi bi-telephone-fill'];
+$urlprefix['email'] = ['attribute' => 'mailto:','icon' => 'bi bi-envelope'];
+$urlprefix['website'] = ['attribute' => '','icon' => 'fa fa-globe'];
+$url_r = mysqli_query($conn,"SELECT * FROM url");
+if(mysqli_num_rows($url_r)>0)
+{
+	while($row = mysqli_fetch_assoc($url_r))
+	{
+		$urlprefix[$row['name']] = [
+            'attribute' => $row['attribute'],
+            'icon' => $row['icon']
+        ];
+	}
+}
+//print_r($urlprefix);
+
 function createdirectory($dir)
 {
 	if(!is_dir($dir))
@@ -25,7 +43,6 @@ function createdirectory($dir)
 		mkdir($dir, 0755, true);
 	}
 }
-
 
 function refreshdirectory($folder)
 {
@@ -167,4 +184,25 @@ function alltagquery($conn,$tag)
 	$location_q = $stmt->get_result();
 	return($location_q);
 
+}
+
+function socialmedia($social)
+{
+	global $urlprefix;
+	$content = '';
+	foreach($urlprefix as $name => $url)
+	{
+		if(!empty($social[$name]))
+		{
+			$content .= '<a id="'.$name.'" class="btn btn-success mx-1 rounded-pill" target="_blank" rel="nofollow"';
+			$content .= 'href="'.$url['attribute'].$social[$name].'"';
+			$content .= '>';
+			if(!empty($url['icon']))
+			{
+				$content .= '<i class="'.$url['icon'].'"></i>';
+			}
+			$content .= '</a>';
+		}
+	}
+	return($content);
 }

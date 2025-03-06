@@ -9,23 +9,6 @@
     return $content;
 } */
 
-$urlprefix = [];
-$urlprefix['phone'] = ['attribute' => 'tel:60','icon' => 'bi bi-telephone-fill'];
-$urlprefix['email'] = ['attribute' => 'mailto:','icon' => 'bi bi-envelope'];
-$urlprefix['website'] = ['attribute' => '','icon' => 'fa fa-globe'];
-$url_r = mysqli_query($conn,"SELECT * FROM url");
-if(mysqli_num_rows($url_r)>0)
-{
-	while($row = mysqli_fetch_assoc($url_r))
-	{
-		$urlprefix[$row['name']] = [
-            'attribute' => $row['attribute'],
-            'icon' => $row['icon']
-        ];
-	}
-}
-//print_r($urlprefix);
-
 function listlocation($conn,$tag)
 {
     $content = "";
@@ -57,16 +40,7 @@ function listlocation($conn,$tag)
             $content .= taglink($l_r['tag']);
             $content .= '   </div>';
             $content .= '   <div class="social-icons ms-auto">';
-            foreach ($urlprefix as $name => $url) {
-                if(!empty($l_r[$name]))
-                {
-                    $content .= '<a href="' . $url['attribute'] . $l_r[$name] . '" target="_blank" rel="noopener">';
-                    if (!empty($url['icon'])) {
-                        $content .= '<i class="' . $url['icon'] . ' me-2"></i>';
-                    }
-                    $content .= '</a>';
-                }
-            }
+            $content .= socialmedia($l_r);
             $content .= '</div>';
             $content .= '</li>';
         }
@@ -79,7 +53,7 @@ function listlocation($conn,$tag)
 function displaylocation($conn,$slug)
 {
     $content = "";
-    $content .= '<p class="text-center my-2"><a href="https://wa.me/601137535178" class="btn btn-primary" target="_blank" rel="noopener">Dapatkan halaman untuk lokasi anda</a></p>';
+    $content .= '<p class="text-center my-2"><a href="https://wa.me/601137535178" class="btn btn-primary" target="_blank" rel="noopener">Sertakan lokasi anda di laman sesawang ini</a></p>';
     $content .= '<div class="container text-black bg-light p-4 my-4 rounded">';
     global $title, $description, $urlprefix;
     $location_q = mysqli_query($conn,"SELECT * FROM location WHERE slug = '" . mysqli_real_escape_string($conn, $slug) . "' LIMIT 1");
@@ -95,16 +69,7 @@ function displaylocation($conn,$slug)
             $content .= '       <h1 class="">'.$l_r['name'];
             $content .='            <button class="btn" onclick="copyurltoclipboard()"><i class="bi bi-copy "></i></button>';
             $content .= '       </h1>';
-            foreach ($urlprefix as $name => $url) {
-                if(!empty($l_r[$name]))
-                {
-                    $content .= '<a class="btn btn-success mx-1 rounded-pill" href="' . $url['attribute'] . $l_r[$name] . '" target="_blank" rel="nofollow">';
-                    if (!empty($url['icon'])) {
-                        $content .= '<i class="' . $url['icon'] . '"></i>';
-                    }
-                    $content .= '</a>';
-                }
-            }
+            $content .= socialmedia($l_r);
             $content .= '   </div>';
             $content .= '   <div class="col-4 text-center">';
             $content .=             $l_r['address'];
