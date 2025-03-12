@@ -21,7 +21,7 @@ function adsinlist($conn)
                 // Choose a random ad from the array
                 $r_ads = $ads[array_rand($ads)];
                 $content .= '<span class="text-white">Iklan</span><br>';
-                $content .= '<a href="' . $r_ads['link'] . '" target="_blank" rel="nofollow"><img src="' . $r_ads['image'] . '" border="0" width="100%" alt="Iklan" /></a>';
+                $content .= '<a href="' . $r_ads['link'] . '" target="_blank" rel="noopenner noreferrer nofollow"><img src="' . $r_ads['image'] . '" border="0" width="100%" alt="Iklan" /></a>';
             }
             $content .= '</li>';
         }

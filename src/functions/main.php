@@ -22,7 +22,7 @@ function checkfile($filename,$development)
 $urlprefix = [];
 $urlprefix['phone'] = ['attribute' => 'tel:60','icon' => 'bi bi-telephone-fill'];
 $urlprefix['email'] = ['attribute' => 'mailto:','icon' => 'bi bi-envelope'];
-$urlprefix['website'] = ['attribute' => '','icon' => 'fa fa-globe'];
+$urlprefix['website'] = ['attribute' => '','icon' => 'bi bi-globe'];
 $url_r = mysqli_query($conn,"SELECT * FROM url");
 if(mysqli_num_rows($url_r)>0)
 {
@@ -35,7 +35,22 @@ if(mysqli_num_rows($url_r)>0)
 	}
 }
 //print_r($urlprefix);
-
+function navigation($file,$text,$style)
+{
+	$boolean = "";
+	foreach ($file as $f) {
+		$boolean = file_exists($f);
+	}
+	if(empty($style)){$style = '';}
+	if($boolean)
+	{
+		?>
+		<li class="nav-item m-1">
+			<a class="navigation fs-6 rounded w-100 d-md-inline-block btn <?php echo($style);?>" href="<?php echo($file['0']);?>"><?php echo($text);?></a>
+		</li>
+		<?php
+	}
+}
 function createdirectory($dir)
 {
 	if(!is_dir($dir))
@@ -86,6 +101,11 @@ function deletedirectory($dir) {
     }
 
     rmdir($dir);
+}
+
+function uploadfile($destination)
+{
+
 }
 
 function addjs($filename)
@@ -194,9 +214,16 @@ function socialmedia($social)
 	{
 		if(!empty($social[$name]))
 		{
-			$content .= '<a id="'.$name.'" class="btn btn-success mx-1 rounded-pill" target="_blank" rel="nofollow"';
+			if(empty($_SESSION['id']))
+			{
+				if($name=='email'||$name=='phone'||$name=='whatsapp')
+				{
+					continue;
+				}
+			}
+			$content .= '<a id="'.$name.'" class="btn btn-success mx-1 rounded-pill" target="_blank" ';
 			$content .= 'href="'.$url['attribute'].$social[$name].'"';
-			$content .= '>';
+			$content .= 'rel="nopenner noreferrer nofollow">';
 			if(!empty($url['icon']))
 			{
 				$content .= '<i class="'.$url['icon'].'"></i>';

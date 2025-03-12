@@ -1,2 +1,4 @@
-
+src/uploads/advertisements/*
+src/uploads/downloads/*
+src/uploads/locations/*
 src/config/database.php

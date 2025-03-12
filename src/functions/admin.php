@@ -25,6 +25,24 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && !empty($_POST))
             redirect('../pages/admin.php?location');
         }
     }
+    else if(isset($_POST['updatepublic']))
+    {
+        $id = $_POST['id'];
+        $public = isset($_POST['public']) ? (int)! $_POST['public'] : 0;
+        $stmt = $conn->prepare("UPDATE location SET public = ? WHERE id = ?");
+        $stmt->bind_param("is",$public,$id);
+        $updatepublic_q = $stmt->execute();
+        $stmt->close();
+        $conn->close();
+        if(!$updatepublic_q)
+        {
+            echo("Error :".myqli_error($conn));
+        }
+        else
+        {
+            redirect('../pages/admin.php?location='.$_POST['slug']);
+        }
+    }
     else if(isset($_POST['updatename']))
     {
         $id = $_POST['id'];
@@ -33,8 +51,8 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && !empty($_POST))
         $public = isset($_POST['public']) ? $_POST['public'] : 0;
         $tag = $_POST['tag'];
         $slug = urlencode(str_replace(' ', '-', strtolower($name)));
-        $stmt = $conn->prepare("UPDATE location SET name = ?, slug = ?, parent = ?, tag = ?, public = ? WHERE id = ?");
-        $stmt->bind_param("ssssis", $name, $slug, $parent, $tag, $public, $id);
+        $stmt = $conn->prepare("UPDATE location SET name = ?, slug = ?, parent = ?, tag = ? WHERE id = ?");
+        $stmt->bind_param("sssss", $name, $slug, $parent, $tag, $id);
         $add_q = $stmt->execute(); $stmt->close();
         if (!$add_q) {
             echo "Error: " . mysqli_error($conn);
@@ -164,7 +182,7 @@ function listlocation($conn,$tag)
 function displaylocation($conn,$slug)
 {
     $content = "";
-    $content .= '<div class="container bg-light text-dark rounded my-3">';
+    $content .= '<div class="container bg-light text-dark rounded my-3 py-1">';
     $location_q = mysqli_query($conn,"SELECT * FROM location WHERE slug = '$slug' LIMIT 1");
     if(mysqli_num_rows($location_q)>0)
     {
@@ -173,12 +191,19 @@ function displaylocation($conn,$slug)
         $title = $l_r['name'];
         $content .= '<h1 class="text-center" style="">Sunting </h1>';
         $content .= '<h2 class="text-center" style="">'.$l_r['name'];
+        $content .= '   <i class="bi ';
+        if($l_r['public']==1){$content.='bi-check-circle text-success';}else{$content .= 'bi-x-circle text-danger';}
+        $content .= '"></i>';
         $content .= '   <a href="../pages/location.php?location='.$l_r['slug'].'" target="_blank" rel="noopener"> <i class="bi bi-box-arrow-up-right"></i></a>';
         $content .= '</h2>';
         $content .= '<form class="center-align m-2" method="POST" action="../pages/admin.php">';
         $content .= '   <input class="" type="text" name="id" value="'.$l_r['id'].'" hidden>';
         $content .= '   <input class="" type="text" name="slug" value="'.$l_r['slug'].'" hidden>';
+        $content .= '   <input type="text" name="public" value="'.$l_r['public'].'" hidden>';
         //* Change public status,name,parent,tag
+        $content .= '<div class="">';
+        $content .= '   <input type="submit" name="updatepublic" value="Siar" class="btn btn-dark">';
+        $content .= '</div>';
         $content .= '<div class="d-flex">';
         $content .= '   <input type="text" id="name" name="name" class="form-control" placeholder="Nama Lokasi" value="'.$l_r['name'].'">';
         $content .= '   <select id="parent" name="parent" class="form-control">';
@@ -200,8 +225,6 @@ function displaylocation($conn,$slug)
         $content .= '</div>';
         $content .= '<div>';
         $content .= '   Tag<input type="text" name="tag" id="tagInput" class="form-control" data-role="tagsinput" placeholder="Add tags..." value="'.$l_r['tag'].'">';
-        $content .= '   <input class="form-check-input" type="checkbox" id="public" name="public" '.($l_r['public'] == 1 ? 'checked' : '').' value="1">';
-        $content .= '   <label class="form-check-label" for="public">Public</label>';
         $content .= '</div>';
         $content .= '<div>';
         $content .= '   <input type="submit" name="updatename" value="Kemaskini" class="btn btn-primary rounded-pill">';
@@ -213,14 +236,14 @@ function displaylocation($conn,$slug)
         $content .= '   <input type="submit" name="updateaddress" value="Kemaskini" class="btn btn-primary rounded-pill">';
         $content .= '</div>';
         $content .= '<div class="my-2">';
-        $content .= '   <div class="input-group"><span class="input-group-text" id="basic-addon3">+60</span><input name="phone" type="text" class="form-control" id="basic-url" aria-describedby="basic-addon3 basic-addon4" value="'.$l_r['phone'].'"></div>';//phone
+        $content .= '   <div class="input-group"><span class="input-group-text" id="basic-addon3"><i class="bi bi-telephone-fill pe-1"></i>+60</span><input name="phone" type="text" class="form-control" id="basic-url" aria-describedby="basic-addon3 basic-addon4" value="'.$l_r['phone'].'"></div>';//phone
         $content .= '   ';
-        $content .= '   <div class="input-group"><span class="input-group-text" id="basic-addon3">E-mail</span><input name="email" type="text" class="form-control" id="basic-url" aria-describedby="basic-addon3 basic-addon4" value="'.$l_r['email'].'"></div>';//email
-        $content .= '   <div class="input-group"><span class="input-group-text" id="basic-addon3">Laman sesawang</span><input name="website" type="text" class="form-control" id="basic-url" aria-describedby="basic-addon3 basic-addon4" value="'.$l_r['website'].'"></div>';//website
-        $content .= '   <div class="input-group"><span class="input-group-text" id="basic-addon3">https://wa.me/60</span><input name="whatsapp" type="text" class="form-control" id="basic-url" aria-describedby="basic-addon3 basic-addon4" value="'.$l_r['whatsapp'].'"></div>';//whatsapp
+        $content .= '   <div class="input-group"><span class="input-group-text" id="basic-addon3"><i class="bi bi-envelope"></i></span><input name="email" type="text" class="form-control" id="basic-url" aria-describedby="basic-addon3 basic-addon4" value="'.$l_r['email'].'"></div>';//email
+        $content .= '   <div class="input-group"><span class="input-group-text" id="basic-addon3"><i class="bi bi-globe"></i></span><input name="website" type="text" class="form-control" id="basic-url" aria-describedby="basic-addon3 basic-addon4" value="'.$l_r['website'].'"></div>';//website
+        $content .= '   <div class="input-group"><span class="input-group-text" id="basic-addon3"><i class="bi bi-whatsapp pe-1"></i>https://wa.me/60</span><input name="whatsapp" type="text" class="form-control" id="basic-url" aria-describedby="basic-addon3 basic-addon4" value="'.$l_r['whatsapp'].'"></div>';//whatsapp
         //daun
         $content .= '   <div class="input-group">';
-        $content .= '       <span class="input-group-text" id="basic-addon3">https://daun.me/</span>';
+        $content .= '       <span class="input-group-text" id="basic-addon3"><i class="bi bi-flower2 pe-1"></i>https://daun.me/</span>';
         $content .= '       <input name="daun" type="text" class="form-control" id="basic-url" aria-describedby="basic-addon3 basic-addon4" value="'.$l_r['daun'].'">';
         $content .= '   </div>';
         $content .= '   <input type="submit" name="updatelink" value="Kemaskini Pautan" class="btn btn-primary rounded-pill">';

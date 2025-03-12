@@ -16,14 +16,13 @@ function listlocation($conn,$tag)
     global $title, $description, $urlprefix;
     $title = "Senarai Lokasi Menarik di Jajahan Jeli";
     $description = "Dapatkan maklumat lanjut dan terokai lokasi-lokasi menarik di Jajahan Jeli.";
-    $content .= '<div class="container mt-4">';
+    $content .= '<div class="container my-4 py-1 bg-light text-dark rounded">';
     $location_q = tagquery($conn,$tag,1);
     if(mysqli_num_rows($location_q)>0)
     {
-        $content .= '<h1 class="text-center">Lokasi</h1>';
-        $content .= '<h2 class="text-center">';
-        if(!empty($tag)){$content .= '#'.urldecode($tag).'</h2>';$title .= " #".urldecode($tag);}else{$content .= mysqli_num_rows($location_q);}
-        $content .= "</h2>";
+        $content .= '<h1 class="text-center">Lokasi';
+        if(!empty($tag)){$content .= '#'.urldecode($tag);$title .= " #".urldecode($tag);} $content .= "(".mysqli_num_rows($location_q).")";
+        $content .= "</h1>";
         $content .= '<ul class="list-group my-4">';
         while($l_r = mysqli_fetch_assoc($location_q))
         {
